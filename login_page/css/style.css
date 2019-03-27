@@ -3,8 +3,9 @@
 /* 02 LOGIN PAGE */
 	/* 02.01 background img */
 	/* 02.02 background plavi filter */
-	/* 02.03 logo */
-    /* 02.04 forma */
+	/* 02.03 container i col div-ovi */
+    /* 02.04 logo */
+    /* 02.05 forma */
 
 /* 01 GENERALS */
 html, body {
@@ -12,43 +13,43 @@ html, body {
 }
 
 /* 01.01 colors */
-.custom-dark-blue-bcg {
+.cst-dark-blue-bcg {
     background: #1B3039;
 }
 
-.custom-light-blue-bcg {
+.cst-light-blue-bcg {
     background: #2EB0D5;
 }
 
-.custom-dark-blue-clr {
+.cst-dark-blue-clr {
 	color: #1B3039;
 }
 
-.custom-light-blue-clr {
+.cst-light-blue-clr {
 	color: #2EB0D5;
 }
 
 /* 02 LOG IN PAGE */
-.custom-all-wrapper {
+.cst-all-wrapper {
     position: relative;
     height: 100%;
 }
 
 /* 02.01 background img */
-.custom-all-wrapper::before {
+.cst-all-wrapper::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("img/bcg-1.jpg");
+    background-image: url("../img/bcg-1.jpg");
     background-size: cover;
     background-position: center;
 }
 
 /* 02.02 background plavi filter */
-.custom-all-wrapper-inside {
+.cst-all-wrapper-inside {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -56,38 +57,39 @@ html, body {
     background: rgba(27, 48, 57, 0.9);
 }
 
-.custom-login-container {
+/* 02.03 container i col div-ovi */
+.cst-login-container {
 	height: 90vh;
 }
 
-.custom-main-col {
+.cst-main-col {
 	max-width: 550px;
 	box-shadow: 0 0 5px currentColor;
 }
 
-/* 02.03 logo */
-.custom-logo-holder {
+/* 02.04 logo */
+.cst-logo-holder {
     width: 250px;
 }
 
 @media screen and (max-width: 500px) {
-	.custom-login-subtitle {
+	.cst-login-subtitle {
 		font-size: 1.2rem;
 	}
 }
 
-/* 02.04 forma */
-.custom-form {
+/* 02.05 forma */
+.cst-form {
 	width: 75%;
 }
 
 @media screen and (max-width: 500px) {
-	.custom-form {
+	.cst-form {
 		width: 90%;
 	}
 }
 
-.custom-input {
+.cst-input {
     background: none;
     border-style: none;
     border-bottom: 1px solid #2D5A69;
@@ -95,30 +97,34 @@ html, body {
     font-size: 1.22rem;
 }
 
-.custom-input:hover {
+.cst-input:invalid {
+    box-shadow: none;
+}
+
+.cst-input:hover {
     box-shadow: 0 0 2px 2px #2D5A69;
 }
 
-.custom-input:focus {
+.cst-input:focus {
     box-shadow: 0 0 2px 2px #2D5A69;
     background: #283D46;	
 }
 
-.custom-input-icon {
+.cst-input-icon {
     position: relative;
     top: 4px;
     margin-right: 3px;
 }
 
-.custom-login-dummy {
+.cst-login-dummy {
 	height: 1px;
 }
 
-.custom-form-group {
+.cst-form-group {
 	position: relative;
 }
 
-.custom-label {
+.cst-label {
 	position: absolute;
     color: #7195A4;
     left: 5px;
@@ -128,17 +134,17 @@ html, body {
     -webkit-transition: 0.4s ease all;
 }
 
-.custom-label:hover {
+.cst-label:hover {
     cursor: text;
 }
 
-.custom-input:focus ~ .custom-label,
-.custom-input:valid ~ .custom-label {
+.cst-input:focus ~ .cst-label,
+.cst-input:valid ~ .cst-label {
 	top: -33px;
 	color: #2EB0D5;
 }
 
-.custom-login-btn:hover {
+.cst-login-btn:hover {
 	background: #16728D;
 	color: ivory;
 }
