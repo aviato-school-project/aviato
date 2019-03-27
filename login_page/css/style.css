@@ -1,0 +1,148 @@
+/* 01 GENERALS */
+	/* 01.01 colors */
+/* 02 LOGIN PAGE */
+	/* 02.01 background img */
+	/* 02.02 background plavi filter */
+	/* 02.03 logo */
+    /* 02.04 forma */
+
+/* 01 GENERALS */
+html, body {
+	height: 100vh;
+}
+
+/* 01.01 colors */
+.custom-dark-blue-bcg {
+    background: #1B3039;
+}
+
+.custom-light-blue-bcg {
+    background: #2EB0D5;
+}
+
+.custom-dark-blue-clr {
+	color: #1B3039;
+}
+
+.custom-light-blue-clr {
+	color: #2EB0D5;
+}
+
+/* 02 LOG IN PAGE */
+.custom-all-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+/* 02.01 background img */
+.custom-all-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("img/bcg-1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* 02.02 background plavi filter */
+.custom-all-wrapper-inside {
+	position: relative;
+	width: 100%;
+	height: 100%;
+    background: rgb(27, 48, 57);
+    background: rgba(27, 48, 57, 0.9);
+}
+
+.custom-login-container {
+	height: 90vh;
+}
+
+.custom-main-col {
+	max-width: 550px;
+	box-shadow: 0 0 5px currentColor;
+}
+
+/* 02.03 logo */
+.custom-logo-holder {
+    width: 250px;
+}
+
+@media screen and (max-width: 500px) {
+	.custom-login-subtitle {
+		font-size: 1.2rem;
+	}
+}
+
+/* 02.04 forma */
+.custom-form {
+	width: 75%;
+}
+
+@media screen and (max-width: 500px) {
+	.custom-form {
+		width: 90%;
+	}
+}
+
+.custom-input {
+    background: none;
+    border-style: none;
+    border-bottom: 1px solid #2D5A69;
+    color: ivory !important;
+    font-size: 1.22rem;
+}
+
+.custom-input:hover {
+    box-shadow: 0 0 2px 2px #2D5A69;
+}
+
+.custom-input:focus {
+    box-shadow: 0 0 2px 2px #2D5A69;
+    background: #283D46;	
+}
+
+.custom-input-icon {
+    position: relative;
+    top: 4px;
+    margin-right: 3px;
+}
+
+.custom-login-dummy {
+	height: 1px;
+}
+
+.custom-form-group {
+	position: relative;
+}
+
+.custom-label {
+	position: absolute;
+    color: #7195A4;
+    left: 5px;
+    top: 5px;
+    transition: 0.4s ease all;
+    -moz-transition: 0.4s ease all;
+    -webkit-transition: 0.4s ease all;
+}
+
+.custom-label:hover {
+    cursor: text;
+}
+
+.custom-input:focus ~ .custom-label,
+.custom-input:valid ~ .custom-label {
+	top: -33px;
+	color: #2EB0D5;
+}
+
+.custom-login-btn:hover {
+	background: #16728D;
+	color: ivory;
+}
+
+
+
+
