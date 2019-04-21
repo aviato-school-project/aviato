@@ -1,0 +1,42 @@
+﻿@model Aviato.Models.Mehanicar
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mehanicar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tip.NazivTipa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tip.NazivTipa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumLicence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumLicence)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

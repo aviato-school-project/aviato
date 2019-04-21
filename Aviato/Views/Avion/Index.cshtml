@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Aviato.Models.Avion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tip.NazivTipa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SifraAviona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GodinaProizvodnje)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServisniStatus)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tip.NazivTipa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SifraAviona)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GodinaProizvodnje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServisniStatus)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AvionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AvionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AvionId })
+        </td>
+    </tr>
+}
+
+</table>

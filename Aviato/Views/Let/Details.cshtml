@@ -1,0 +1,74 @@
+﻿@model Aviato.Models.Let
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Let</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Avion1.SifraAviona)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Avion1.SifraAviona)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destinacija1.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destinacija1.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni1.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni1.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni2.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni2.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni3.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni3.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VremePoletanja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VremePoletanja)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LetId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

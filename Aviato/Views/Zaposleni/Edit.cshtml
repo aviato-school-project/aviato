@@ -1,0 +1,133 @@
+﻿@model Aviato.ViewModels.EditUsersViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Izmena</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Izmena podataka zaposlenog</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Zaposleni.ZaposleniId)
+    @Html.HiddenFor(model => model.Zaposleni.IdentityId)
+
+
+
+    @Html.HiddenFor(model => model.Zaposleni.ZaposleniId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Zaposleni.JMBG, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Zaposleni.JMBG, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Zaposleni.JMBG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Zaposleni.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Zaposleni.Ime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Zaposleni.Ime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Zaposleni.Prezime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Zaposleni.Prezime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Zaposleni.Prezime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Zaposleni.GodinaRodjenja, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Zaposleni.GodinaRodjenja, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Zaposleni.GodinaRodjenja, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @if (ViewBag.Pozicija == "Pilot")
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pilot.PoslednjiMedicinski, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pilot.PoslednjiMedicinski, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pilot.PoslednjiMedicinski, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pilot.OcenaZS, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pilot.OcenaZS, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pilot.OcenaZS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    else if (ViewBag.Pozicija == "Stjuard")
+    {
+        foreach (var stju in Model.Stjuard)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => stju.JezikId, "Jezik", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*<div class="col-md-10">
+                    @* @Html.EditorFor(model => stju.Jezik.Jezici, new { htmlAttributes = new { @class = "form-control" } })*@
+                @*@Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.Jezici, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control", @style = "display: inline-block" })
+                        @Html.ValidationMessageFor(model => stju.Jezik.Jezici, "", new { @class = "text-danger" })
+                        @*
+                    </div>*@
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.JezikId, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control", @style = "display: inline-block" })
+                    @Html.ValidationMessageFor(model => stju.Jezik.Jezici, "", new { @class = "text-danger", @style = "padding-right: 20px" })
+                    <span class="fas fa-minus-circle"></span><span class="fas fa-plus-circle"></span>
+                </div>
+            </div>
+        }
+    }
+    else if (ViewBag.Pozicija == "Mehaničar")
+    {
+        foreach (var meh in Model.Mehanicar)
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => meh.Licenca, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => meh.Tip.NazivTipa, new SelectList(ViewBag.Licenca, "Value", "Text"), meh.Tip.NazivTipa, new { @class = "form-control", @style = "display: inline-block" })
+                    @Html.ValidationMessageFor(model => meh.Tip.NazivTipa, "", new { @class = "text-danger", @style = "padding-right: 20px" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => meh.DatumLicence, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => meh.DatumLicence, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => meh.DatumLicence, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    }
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

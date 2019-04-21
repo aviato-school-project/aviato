@@ -1,0 +1,49 @@
+﻿<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@model Aviato.Models.RegisterViewModel
+@* Pilot create *@
+
+    <h4>Unos zdravstvenog stanja za pilota</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pilot.PoslednjiMedicinski, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Pilot.PoslednjiMedicinski, new { htmlAttributes = new { @class = "form-control input-group date", id="datetimepicker3" } })
+            @Html.ValidationMessageFor(model => model.Pilot.PoslednjiMedicinski, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pilot.OcenaZS, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Pilot.OcenaZS)
+                @Html.ValidationMessageFor(model => model.Pilot.OcenaZS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pilot.SatiLetenja, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Pilot.SatiLetenja, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Pilot.SatiLetenja, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                    format: 'M/DD/YYYY'
+                });
+            });
+    </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

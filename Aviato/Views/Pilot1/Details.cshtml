@@ -1,0 +1,50 @@
+﻿@model Aviato.Models.Pilot
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pilot</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaposleni.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zaposleni.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PoslednjiMedicinski)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PoslednjiMedicinski)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OcenaZS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OcenaZS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SatiLetenja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SatiLetenja)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PilotId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

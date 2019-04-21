@@ -1,0 +1,68 @@
+﻿@model Aviato.Models.Zaposleni
+
+@{
+    ViewBag.Title = "Detalji";
+}
+
+<h2>Podaci o zaposlenom</h2>
+
+<div>
+    <h4>Zaposleni</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prezime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prezime)
+        </dd>
+
+        <dt>
+            Email
+        </dt>
+
+        <dd>
+            @* @ViewData["Email"]*@
+        </dd>
+
+<dt>
+            @Html.DisplayNameFor(model => model.GodinaRodjenja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GodinaRodjenja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JMBG)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.IdentityId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdentityId)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ZaposleniId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
