@@ -1,0 +1,154 @@
+/* 01 GENERALS */
+	/* 01.01 colors */
+/* 02 LOGIN PAGE */
+	/* 02.01 background img */
+	/* 02.02 background plavi filter */
+	/* 02.03 container i col div-ovi */
+    /* 02.04 logo */
+    /* 02.05 forma */
+
+/* 01 GENERALS */
+html, body {
+	height: 100vh;
+}
+
+/* 01.01 colors */
+.cst-dark-blue-bcg {
+    background: #1B3039;
+}
+
+.cst-light-blue-bcg {
+    background: #2EB0D5;
+}
+
+.cst-dark-blue-clr {
+	color: #1B3039;
+}
+
+.cst-light-blue-clr {
+	color: #2EB0D5;
+}
+
+/* 02 LOG IN PAGE */
+.cst-all-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+/* 02.01 background img */
+.cst-all-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/bcg-1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* 02.02 background plavi filter */
+.cst-all-wrapper-inside {
+	position: relative;
+	width: 100%;
+	height: 100%;
+    background: rgb(27, 48, 57);
+    background: rgba(27, 48, 57, 0.9);
+}
+
+/* 02.03 container i col div-ovi */
+.cst-login-container {
+	height: 90vh;
+}
+
+.cst-main-col {
+	max-width: 550px;
+	box-shadow: 0 0 5px currentColor;
+}
+
+/* 02.04 logo */
+.cst-logo-holder {
+    width: 250px;
+}
+
+@media screen and (max-width: 500px) {
+	.cst-login-subtitle {
+		font-size: 1.2rem;
+	}
+}
+
+/* 02.05 forma */
+.cst-form {
+	width: 75%;
+}
+
+@media screen and (max-width: 500px) {
+	.cst-form {
+		width: 90%;
+	}
+}
+
+.cst-input {
+    background: none;
+    border-style: none;
+    border-bottom: 1px solid #2D5A69;
+    color: ivory !important;
+    font-size: 1.22rem;
+}
+
+.cst-input:invalid {
+    box-shadow: none;
+}
+
+.cst-input:hover {
+    box-shadow: 0 0 2px 2px #2D5A69;
+}
+
+.cst-input:focus {
+    box-shadow: 0 0 2px 2px #2D5A69;
+    background: #283D46;	
+}
+
+.cst-input-icon {
+    position: relative;
+    top: 4px;
+    margin-right: 3px;
+}
+
+.cst-login-dummy {
+	height: 1px;
+}
+
+.cst-form-group {
+	position: relative;
+}
+
+.cst-label {
+	position: absolute;
+    color: #7195A4;
+    left: 5px;
+    top: 5px;
+    transition: 0.4s ease all;
+    -moz-transition: 0.4s ease all;
+    -webkit-transition: 0.4s ease all;
+}
+
+.cst-label:hover {
+    cursor: text;
+}
+
+.cst-input:focus ~ .cst-label,
+.cst-input:valid ~ .cst-label {
+	top: -33px;
+	color: #2EB0D5;
+}
+
+.cst-login-btn:hover {
+	background: #16728D;
+	color: ivory;
+}
+
+
+
+
