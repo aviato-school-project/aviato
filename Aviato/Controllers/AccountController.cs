@@ -169,7 +169,6 @@ namespace Aviato.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             
-            // ViewBag.Jezici = null;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -181,9 +180,6 @@ namespace Aviato.Controllers
                     var rola = model.RoleName;
 
                     Pilot Pilot = new Pilot();
-                    //Stjuard Stjuard = new Stjuard();
-                    
-                   
 
                     Zaposleni Zaposleni = new Zaposleni() {
                         Ime = model.Zaposleni.Ime,

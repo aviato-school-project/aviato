@@ -163,16 +163,32 @@ namespace Aviato.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ZaposleniId,JMBG,Ime,Prezime,GodinaRodjenja,IdentityId")] Zaposleni zaposleni, EditUsersViewModel EZVM)
+        public async Task<ActionResult> Edit([Bind(Include = "ZaposleniId,JMBG,Ime,Prezime,GodinaRodjenja,IdentityId")] Zaposleni zaposleni,
+            [Bind(Include = "PilotId,PoslednjiMedicinski,OcenaZS,SatiLetenja,SifraPilota")] Pilot pilot, 
+            EditUsersViewModel EZVM)
         {
             if (ModelState.IsValid)
             {
+                
                 zaposleni.ZaposleniId = EZVM.Zaposleni.ZaposleniId;
                 zaposleni.IdentityId = EZVM.Zaposleni.IdentityId;
                 zaposleni.Ime = EZVM.Zaposleni.Ime;
                 zaposleni.Prezime = EZVM.Zaposleni.Prezime;
                 zaposleni.JMBG = EZVM.Zaposleni.JMBG;
                 zaposleni.GodinaRodjenja = EZVM.Zaposleni.GodinaRodjenja;
+
+                if(EZVM.Pilot != null)
+                {
+                    pilot.PilotId = EZVM.Pilot.PilotId;
+                    pilot.PoslednjiMedicinski = EZVM.Pilot.PoslednjiMedicinski;
+                    pilot.OcenaZS = EZVM.Pilot.OcenaZS;
+                    pilot.SatiLetenja = EZVM.Pilot.SatiLetenja;
+                    pilot.SifraPilota = EZVM.Zaposleni.ZaposleniId;
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(pilot).State = EntityState.Modified;
+                    }
+                }
                 
                 db.Entry(zaposleni).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -180,6 +196,33 @@ namespace Aviato.Controllers
             }
             return View(EZVM);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> EditPilota([Bind(Include = "ZaposleniId,JMBG,Ime,Prezime,GodinaRodjenja,IdentityId")] Zaposleni zaposleni, [Bind(Include = "PilotId,PoslednjiMedicinski,OcenaZS,SatiLetenja,SifraPilota")] Pilot pilot, EditUsersViewModel EZVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        zaposleni.ZaposleniId = EZVM.Zaposleni.ZaposleniId;
+        //        zaposleni.IdentityId = EZVM.Zaposleni.IdentityId;
+        //        zaposleni.Ime = EZVM.Zaposleni.Ime;
+        //        zaposleni.Prezime = EZVM.Zaposleni.Prezime;
+        //        zaposleni.JMBG = EZVM.Zaposleni.JMBG;
+        //        zaposleni.GodinaRodjenja = EZVM.Zaposleni.GodinaRodjenja;
+
+        //        pilot.PilotId = EZVM.Pilot.PilotId;
+        //        pilot.PoslednjiMedicinski = EZVM.Pilot.PoslednjiMedicinski;
+        //        pilot.OcenaZS = EZVM.Pilot.OcenaZS;
+        //        pilot.SatiLetenja = EZVM.Pilot.SatiLetenja;
+        //        pilot.SifraPilota = EZVM.Zaposleni.ZaposleniId;
+
+        //        db.Entry(zaposleni).State = EntityState.Modified;
+        //        db.Entry(pilot).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(EZVM);
+        //}
 
         // GET: Zaposleni/Delete/5
         public async Task<ActionResult> Delete(int? id)

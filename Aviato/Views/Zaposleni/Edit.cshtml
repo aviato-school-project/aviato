@@ -18,6 +18,7 @@
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.Zaposleni.ZaposleniId)
     @Html.HiddenFor(model => model.Zaposleni.IdentityId)
+    @*<input type="hidden" value=@ViewBag.Pozicija  name="poz" />*@
 
 
 
@@ -56,6 +57,8 @@
     </div>
     @if (ViewBag.Pozicija == "Pilot")
     {
+        @Html.HiddenFor(model => model.Pilot.PilotId)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Pilot.PoslednjiMedicinski, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

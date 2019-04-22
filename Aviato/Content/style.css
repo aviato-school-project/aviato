@@ -10,6 +10,7 @@
 /* 01 GENERALS */
 html, body {
 	height: 100vh;
+    color: ivory;
 }
 
 /* 01.01 colors */
@@ -32,7 +33,11 @@ html, body {
 /* 02 LOG IN PAGE */
 .cst-all-wrapper {
     position: relative;
-    height: 100%;
+    min-height: 100%;
+    background-image: url("../Images/bcg-1.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 /* 02.01 background img */
@@ -43,9 +48,10 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../img/bcg-1.jpg");
-    background-size: cover;
-    background-position: center;
+    /*background-image: url("../Images/bcg-1.jpg");*/
+    /*background-size: cover;
+    background-attachment: fixed;
+    background-position: center;*/
 }
 
 /* 02.02 background plavi filter */
@@ -64,7 +70,7 @@ html, body {
 
 .cst-main-col {
 	max-width: 550px;
-	box-shadow: 0 0 5px currentColor;
+	/*box-shadow: 0 0 5px currentColor;*/
 }
 
 /* 02.04 logo */
@@ -149,6 +155,10 @@ html, body {
 	color: ivory;
 }
 
+footer {
+    color: ivory;
+}
 
-
-
+.h-100-cust {
+    min-height: 100vh !important;
+}
