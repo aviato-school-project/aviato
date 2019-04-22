@@ -78,21 +78,16 @@
     {
         foreach (var stju in Model.Stjuard)
         {
-            <div class="form-group">
+            <div class="form-group ovdedodaj">
                 @Html.LabelFor(model => stju.JezikId, "Jezik", htmlAttributes: new { @class = "control-label col-md-2" })
-                @*<div class="col-md-10">
-                    @* @Html.EditorFor(model => stju.Jezik.Jezici, new { htmlAttributes = new { @class = "form-control" } })*@
-                @*@Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.Jezici, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control", @style = "display: inline-block" })
-                        @Html.ValidationMessageFor(model => stju.Jezik.Jezici, "", new { @class = "text-danger" })
-                        @*
-                    </div>*@
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.JezikId, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control", @style = "display: inline-block" })
+                <div class="col-md-10 target">
+                    @Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.JezikId, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control izabraniJezik", @style = "display: inline-block" })
                     @Html.ValidationMessageFor(model => stju.Jezik.Jezici, "", new { @class = "text-danger", @style = "padding-right: 20px" })
                     <span class="fas fa-minus-circle"></span><span class="fas fa-plus-circle"></span>
                 </div>
             </div>
         }
+        <script src="~/Scripts/plus.js"></script>
     }
     else if (ViewBag.Pozicija == "Mehaničar")
     {
@@ -113,15 +108,19 @@
                     @Html.EditorFor(model => meh.DatumLicence, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => meh.DatumLicence, "", new { @class = "text-danger" })
                 </div>
+
             </div>
         }
     }
 
 
+    <input type="hidden" name="JeziciZaUnos" id="pass" value="" />
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-default okidac" />
+            <script src="~/Scripts/okidac.js"></script>
+
         </div>
     </div>
 </div>
@@ -130,7 +129,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
+<script src="~/Scripts/UnosZaposlenogSwitcher.js"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

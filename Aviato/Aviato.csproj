@@ -187,6 +187,7 @@
     <Compile Include="Controllers\PilotController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StjuardController.cs" />
+    <Compile Include="Controllers\StjuardController1.cs" />
     <Compile Include="Controllers\TipController.cs" />
     <Compile Include="Controllers\ZaposleniController.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,6 +288,10 @@
     <Compile Include="Migrations\201904211544226_editZap_01.cs" />
     <Compile Include="Migrations\201904211544226_editZap_01.Designer.cs">
       <DependentUpon>201904211544226_editZap_01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904221629122_EditUpdate_01.cs" />
+    <Compile Include="Migrations\201904221629122_EditUpdate_01.Designer.cs">
+      <DependentUpon>201904221629122_EditUpdate_01.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -526,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904211544226_editZap_01.resx">
       <DependentUpon>201904211544226_editZap_01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221629122_EditUpdate_01.resx">
+      <DependentUpon>201904221629122_EditUpdate_01.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

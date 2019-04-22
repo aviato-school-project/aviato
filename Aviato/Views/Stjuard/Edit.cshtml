@@ -1,30 +1,13 @@
-﻿@model Aviato.Models.Stjuard
+﻿@model Aviato.ViewModels.EditUsersViewModel
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Stjuard</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.JezikId)
-
-        @Html.HiddenFor(model => model.StjuardId)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+@foreach (var stju in Model.Stjuard)
+        {
+            <div class="form-group ovdedodaj">
+                @Html.LabelFor(model => stju.JezikId, "Jezik", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => stju.Jezik.Jezici, new SelectList(ViewBag.JezikId, "Value", "Text"), stju.Jezik.Jezici, new { @class = "form-control", @style = "display: inline-block" })
+                    @Html.ValidationMessageFor(model => stju.Jezik.Jezici, "", new { @class = "text-danger", @style = "padding-right: 20px" })
+                    <span class="fas fa-minus-circle"></span><span class="fas fa-plus-circle"></span>
+                </div>
             </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        }

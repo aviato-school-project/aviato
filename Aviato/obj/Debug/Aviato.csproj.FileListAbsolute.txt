@@ -372,3 +372,4 @@ C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.csproj.CoreCompileInputs.cache
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.csproj.CopyComplete
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.dll
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.pdb
+C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.Migrations.EditUpdate_01.resources

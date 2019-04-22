@@ -164,8 +164,8 @@ namespace Aviato.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ZaposleniId,JMBG,Ime,Prezime,GodinaRodjenja,IdentityId")] Zaposleni zaposleni,
-            [Bind(Include = "PilotId,PoslednjiMedicinski,OcenaZS,SatiLetenja,SifraPilota")] Pilot pilot, 
-            EditUsersViewModel EZVM)
+                                             [Bind(Include = "PilotId,PoslednjiMedicinski,OcenaZS,SatiLetenja,SifraPilota")] Pilot pilot, 
+                                              EditUsersViewModel EZVM)
         {
             if (ModelState.IsValid)
             {
@@ -189,7 +189,38 @@ namespace Aviato.Controllers
                         db.Entry(pilot).State = EntityState.Modified;
                     }
                 }
-                
+
+                if (EZVM.Stjuard != null)
+                {
+                    ICollection<int> postojeciJezici = (from s in db.Stjuard
+                                                        where s.StjuardId == s.StjuardId
+                                                        select s.JezikId).ToList();
+                    foreach (var j in postojeciJezici)
+                    {
+                        db.Stjuard.RemoveRange(db.Stjuard.Where(x => x.StjuardId == EZVM.Zaposleni.ZaposleniId));
+                        await db.SaveChangesAsync();
+                    }
+
+                    var jezici = EZVM.JeziciZaUnos.Split(',');
+                    foreach (var j in jezici)
+                    {
+                        Stjuard stju = new Stjuard();
+                        stju.StjuardId = EZVM.Zaposleni.ZaposleniId;
+                        stju.JezikId = Convert.ToInt32(j);
+
+                        db.Stjuard.Add(stju);
+                    }
+                    
+                    await db.SaveChangesAsync();
+                        
+                    //}
+
+                    //if (ModelState.IsValid)
+                    //{
+                    //    db.Entry(stju).State = EntityState.Modified;
+                    //}
+                }
+
                 db.Entry(zaposleni).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

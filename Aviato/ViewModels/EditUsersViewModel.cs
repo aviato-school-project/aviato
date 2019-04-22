@@ -27,5 +27,10 @@ namespace Aviato.ViewModels
         [Column("StjuardObj")]
         public virtual ICollection<Stjuard> Stjuard { get; set; }
         //public int StjuardId { get; set; }
+
+        public string JeziciZaUnos { get; set; }
+
+        public string tipoviZaUnos { get; set; }
+        public string datumiZaUnos { get; set; }
     }
 }
