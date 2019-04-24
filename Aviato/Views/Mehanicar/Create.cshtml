@@ -13,10 +13,10 @@
         @Html.LabelFor(model => model.Mehanicar.Licenca, "Licenca", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.LabelFor(model => model.Mehanicar.DatumLicence, htmlAttributes: new { @class = "control-label col-md-2", @style = "margin-left: 100px" })
         <div class="form-group col-md-10 target">
-            @Html.DropDownListFor(model => model.Mehanicar.Licenca, new SelectList(ViewBag.Licenca, "Value", "Text"), "Izaberi ", new { @class = "form-control izabranaLicenca", @style = "display: inline-block" })
+            @Html.DropDownListFor(model => model.Mehanicar.Licenca, new SelectList(ViewBag.Licenca, "Value", "Text"), "Izaberi ", new { @class = "form-control izabranaLicenca polje", @style = "display: inline-block" })
             @Html.ValidationMessageFor(model => model.Mehanicar.Licenca, "", new { @class = "text-danger", @style = "padding-right: 20px" })
 
-            @Html.EditorFor(model => model.Mehanicar.DatumLicence, new { htmlAttributes = new { @class = "form-control izabraniDatum input-group date datetimepicker3", id="datetimepicker3", @style = "display: inline-block" } })
+            @Html.EditorFor(model => model.Mehanicar.DatumLicence, new { htmlAttributes = new { @class = "form-control izabraniDatum input-group date datetimepicker3", id = "datetimepicker3", @style = "display: inline-block" } })
             @Html.ValidationMessageFor(model => model.Mehanicar.DatumLicence, "", new { @class = "text-danger" })
 
             <input type="hidden" name="TipoviZaUnos" id="TipoviZaUnos" value="" />
@@ -27,10 +27,10 @@
     </div>
 </div>
 <script src="~/Scripts/plus.js"></script>
-<script src="~/Scripts/moment.js"></script>
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
-<script src="~/Scripts/MehanicariUnos.js"></script>
+@*<script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>*@
+@*<script src="~/Scripts/MehanicariUnos.js"></script>*@
 
 <script type="text/javascript">
     $(function () {

@@ -38,7 +38,7 @@ namespace Aviato.Controllers
                                         GodinaRodjenja = Z.GodinaRodjenja,
                                         Pozicija = (from UR in U.Roles
                                                     join R in db.Roles
-                                 on UR.RoleId equals R.Id
+                                                    on UR.RoleId equals R.Id
                                                     select R.Name).ToList()
                                     }).ToList().Select(p => new Aviato.ViewModels.ZaposleniSRolom()
                                     {
@@ -48,7 +48,7 @@ namespace Aviato.Controllers
                                         JMBG = p.JMBG,
                                         GodinaRođenja = p.GodinaRodjenja,
                                         Pozicija = string.Join(",", p.Pozicija)
-                                });
+                                    });
             return View(PrikaziZaposlene);
         }
 
@@ -57,16 +57,51 @@ namespace Aviato.Controllers
         {
             //var context = new IdentityDbContext();
             //var email = context.Users.ToList();
-            
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);
-            //string email = HttpContext.CurrentHandler.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(zaposleni.IdentityId).UserName;
-            //string email = 
-            //ViewData["Email"] = Membership.GetUser(zaposleni.IdentityId).UserName.ToString();
-            //zaposleni.Email = User.Identity.GetUserName();
+
+            var rola = string.Join(", ", getRoleByUserId(zaposleni.IdentityId));
+            ViewBag.Pozicija = rola;
+            ViewBag.Email = (from U in db.Users
+                             where U.Id == zaposleni.IdentityId
+                             select U.Email).First();
+
+            if (rola == "Pilot")
+            {
+                var pilot = (from p in db.Pilot
+                             where p.SifraPilota == zaposleni.ZaposleniId
+                             select p).First();
+                ViewBag.Detalji = pilot;
+            }
+            else if (rola == "Stjuard")
+            {
+                var stjuard = (from s in db.Stjuard
+                               join j in db.Jezik
+                               on s.JezikId equals j.JezikId
+                               where s.StjuardId == zaposleni.ZaposleniId
+                               select j.Jezici).ToList();
+                
+                ViewBag.Detalji = stjuard;
+            }
+            else if (rola == "Mehaničar")
+            {
+                var mehanicar = (from m in db.Mehanicar
+                                 join t in db.Tip
+                                 on m.Licenca equals t.TipId
+                                 where m.MehanicarId == zaposleni.ZaposleniId
+                                 select m).ToList();
+                               //new  {
+                               //    Naziv = t.NazivTipa,
+                               //    Datum = m.DatumLicence
+                               //}).ToList();
+
+                ViewBag.Detalji = mehanicar;
+            }
+
             if (zaposleni == null)
             {
                 return HttpNotFound();
@@ -109,18 +144,18 @@ namespace Aviato.Controllers
             }
 
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);
-            
 
-            var rola = (from U in db.Users
-                        where U.Id == zaposleni.IdentityId
-                        select new
-                        {
-                            Pozicija = (from UR in U.Roles
-                                        join R in db.Roles
-                                        on UR.RoleId equals R.Id
-                                        select R.Name)
-                        }).First();
-            ViewBag.Pozicija = string.Join(", ", rola.Pozicija);
+            var rola = getRoleByUserId(zaposleni.IdentityId);
+            //var rola = (from U in db.Users
+            //            where U.Id == zaposleni.IdentityId
+            //            select new
+            //            {
+            //                Pozicija = (from UR in U.Roles
+            //                            join R in db.Roles
+            //                            on UR.RoleId equals R.Id
+            //                            select R.Name)
+            //            }).First();
+            ViewBag.Pozicija = string.Join(", ", rola);
             EditUsersViewModel EZVM = new EditUsersViewModel()
             {
                 Zaposleni = zaposleni
@@ -190,36 +225,70 @@ namespace Aviato.Controllers
                     }
                 }
 
-                if (EZVM.Stjuard != null)
+                if (EZVM.JeziciZaUnos != null)
                 {
-                    ICollection<int> postojeciJezici = (from s in db.Stjuard
-                                                        where s.StjuardId == s.StjuardId
-                                                        select s.JezikId).ToList();
-                    foreach (var j in postojeciJezici)
-                    {
+                    //ICollection<int> postojeciJezici = (from s in db.Stjuard
+                    //                                    where s.StjuardId == s.StjuardId
+                    //                                    select s.JezikId).ToList();
+                    //foreach (var j in postojeciJezici)
+                    //{
                         db.Stjuard.RemoveRange(db.Stjuard.Where(x => x.StjuardId == EZVM.Zaposleni.ZaposleniId));
                         await db.SaveChangesAsync();
-                    }
+                    //}
 
-                    var jezici = EZVM.JeziciZaUnos.Split(',');
-                    foreach (var j in jezici)
+                    try
                     {
-                        Stjuard stju = new Stjuard();
-                        stju.StjuardId = EZVM.Zaposleni.ZaposleniId;
-                        stju.JezikId = Convert.ToInt32(j);
+                        var jezici = EZVM.JeziciZaUnos.Split(',');
+                        foreach (var j in jezici)
+                        {
+                            Stjuard stju = new Stjuard();
+                            stju.StjuardId = EZVM.Zaposleni.ZaposleniId;
+                            stju.JezikId = Convert.ToInt32(j);
 
-                        db.Stjuard.Add(stju);
+                            db.Stjuard.Add(stju);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write(e);
                     }
                     
+
                     await db.SaveChangesAsync();
-                        
-                    //}
 
                     //if (ModelState.IsValid)
                     //{
                     //    db.Entry(stju).State = EntityState.Modified;
                     //}
                 }
+
+                else if (EZVM.tipoviZaUnos != null)
+                {
+                    //ICollection<int> postojeceLicence = (from m in db.Mehanicar
+                    //                                     where m.MehanicarId == EZVM.Zaposleni.ZaposleniId
+                    //                                     select m.Licenca).ToList();
+                    //foreach (var l in postojeceLicence)
+                    //{
+                        db.Mehanicar.RemoveRange(db.Mehanicar.Where(x => x.MehanicarId == EZVM.Zaposleni.ZaposleniId));
+                        await db.SaveChangesAsync();
+                    //}
+
+                    var licence = EZVM.tipoviZaUnos.Split(',');
+                    var datumi = EZVM.datumiZaUnos.Split(',');
+                    for (var l = 0; l < licence.Length; l++)
+                    {
+                        Mehanicar meh = new Mehanicar();
+                        meh.MehanicarId = EZVM.Zaposleni.ZaposleniId;
+                        meh.Licenca = Convert.ToInt32(licence[l]);
+                        meh.DatumLicence = Convert.ToDateTime(datumi[l]);
+
+                        db.Mehanicar.Add(meh);
+                    }
+
+                    await db.SaveChangesAsync();
+                }
+
+                
 
                 db.Entry(zaposleni).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -291,6 +360,20 @@ namespace Aviato.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IEnumerable<string> getRoleByUserId(string id)
+        {
+            var rola = (from U in db.Users
+                        where U.Id == id
+                        select new
+                        {
+                            Pozicija = (from UR in U.Roles
+                                        join R in db.Roles
+                                        on UR.RoleId equals R.Id
+                                        select R.Name)
+                        }).First();
+            return rola.Pozicija;
         }
     }
 }

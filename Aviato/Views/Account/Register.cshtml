@@ -15,50 +15,50 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Zaposleni.Ime, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.TextBoxFor(m => m.Zaposleni.Ime, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Zaposleni.Prezime, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.TextBoxFor(m => m.Zaposleni.Prezime, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Zaposleni.JMBG, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.TextBoxFor(m => m.Zaposleni.JMBG, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Zaposleni.GodinaRodjenja, "Godina rođenja", new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.TextBoxFor(m => m.Zaposleni.GodinaRodjenja, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, "Potvrdi password", new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.RoleName, "Pozicija", new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-12">
             @Html.DropDownListFor(m => m.RoleName, new SelectList(ViewBag.Roles, "Value", "Text"), "Izaberi ", new { @class = "form-control", @onchange = "UnosZaposlenog(this.value)" })
 
         </div>

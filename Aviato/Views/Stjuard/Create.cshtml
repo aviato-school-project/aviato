@@ -8,7 +8,7 @@
 <div class="form-group ovdedodaj">
     @Html.LabelFor(model => model.Stjuard.JezikId, "Jezik", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10 target">
-        @Html.DropDownListFor(model => model.Stjuard.JezikId, new SelectList(ViewBag.JezikId, "Value", "Text"), new { @class = "form-control izabraniJezik", @style = "display: inline-block;" })
+        @Html.DropDownListFor(model => model.Stjuard.JezikId, new SelectList(ViewBag.JezikId, "Value", "Text"), new { @class = "form-control izabraniJezik polje", @style = "display: inline-block;" })
         @Html.ValidationMessageFor(model => model.Stjuard.JezikId, "", new { @class = "text-danger" })
         <span class="fas fa-minus-circle"></span><span class="fas fa-plus-circle"></span>
     </div>

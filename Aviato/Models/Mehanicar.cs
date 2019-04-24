@@ -20,6 +20,7 @@ namespace Aviato.Models
         public int Licenca { get; set; }
 
         [Column(TypeName = "smalldatetime")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Datum sticanja licence")]
         public DateTime DatumLicence { get; set; }
 

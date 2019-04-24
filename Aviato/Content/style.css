@@ -162,3 +162,7 @@ footer {
 .h-100-cust {
     min-height: 100vh !important;
 }
+
+select.form-control:not([size]):not([multiple]) {
+    height: unset !important;
+}

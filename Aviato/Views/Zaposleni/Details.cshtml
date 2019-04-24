@@ -7,7 +7,7 @@
 <h2>Podaci o zaposlenom</h2>
 
 <div>
-    <h4>Zaposleni</h4>
+    <h4>@ViewBag.Pozicija</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -33,10 +33,10 @@
         </dt>
 
         <dd>
-            @* @ViewData["Email"]*@
+            @ViewBag.Email
         </dd>
 
-<dt>
+        <dt>
             @Html.DisplayNameFor(model => model.GodinaRodjenja)
         </dt>
 
@@ -51,6 +51,86 @@
         <dd>
             @Html.DisplayFor(model => model.JMBG)
         </dd>
+        @if (ViewBag.Pozicija == "Pilot")
+        {
+            <hr />
+            <dt>
+                Poslednji medicinski pregled
+            </dt>
+
+            <dd>
+                @ViewBag.Detalji.PoslednjiMedicinski
+            </dd>
+
+            <dt>
+                Ocena zdravstvenog stanja
+            </dt>
+
+            <dd>
+                @if (@ViewBag.Detalji.OcenaZS)
+                {
+                    <p>Sposoban</p>
+                }
+                else
+                {
+                    <p>Prizemljen</p>
+                }
+            </dd>
+
+            <dt>
+                Sati letenja
+            </dt>
+
+            <dd>
+                @ViewBag.Detalji.SatiLetenja
+            </dd>
+        }
+
+        @if (ViewBag.Pozicija == "Stjuard")
+        {
+            <hr />
+            <dt>
+                Govori jezike
+            </dt>
+
+            <dd>
+                @foreach (var jezik in ViewBag.Detalji)
+                {
+                    <ul>
+                        <li>@jezik</li>
+                    </ul>
+                }
+
+            </dd>
+        }
+
+        @if (ViewBag.Pozicija == "Mehaničar")
+        {
+            <hr />
+            @*@{
+                var test = ViewBag.Detalji;
+            }*@
+
+                foreach (var licenca in ViewBag.Detalji)
+                {
+                <dt>
+                    Liceniran za
+                </dt>
+
+                <dd>
+                    @licenca.Tip.NazivTipa
+                </dd>
+
+                <dt>
+                    Na dan
+                </dt>
+
+                <dd>
+                    @licenca.DatumLicence
+                </dd>
+                }
+
+        }
 
         @*<dt>
             @Html.DisplayNameFor(model => model.IdentityId)
@@ -62,7 +142,9 @@
 
     </dl>
 </div>
+<hr />
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ZaposleniId }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.ZaposleniId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
