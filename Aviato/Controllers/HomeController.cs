@@ -15,6 +15,7 @@ using System.Web.Security;
 
 namespace Aviato.Controllers
 {
+    [HandleError]
     [Authorize]
     public class HomeController : Controller
     {

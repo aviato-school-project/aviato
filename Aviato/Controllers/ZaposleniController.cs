@@ -5,18 +5,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-//using System.Web;
 using System.Web.Mvc;
 using Aviato.Models;
-//using Microsoft.AspNet.Identity.EntityFramework;
-//using Microsoft.AspNet.Identity;
-//using System.Web.Security;
 using Aviato.ViewModels;
-//using Microsoft.AspNet.Identity.Owin;
-//using Aviato.Migrations;
 
 namespace Aviato.Controllers
 {
+    [HandleError]
     [Authorize(Roles = "Admin, SuperUser")]
     public class ZaposleniController : Controller
     {
@@ -60,9 +55,19 @@ namespace Aviato.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);
-
-            var rola = string.Join(", ", GetRoleByUserId(zaposleni.IdentityId));
-            ViewBag.Pozicija = rola;
+            var rola = "";
+            try
+            {
+                rola = string.Join(", ", GetRoleByUserId(zaposleni.IdentityId));
+                ViewBag.Pozicija = rola;
+            }
+            catch (Exception)
+            {
+                Server.ClearError();
+                Response.Redirect("~/Error/BadRequest");
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Los ili besmislen zahtev");
+            }
+            
             ViewBag.Email = (from U in db.Users
                              where U.Id == zaposleni.IdentityId
                              select U.Email).First();
@@ -130,6 +135,7 @@ namespace Aviato.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return Http
             }
 
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);

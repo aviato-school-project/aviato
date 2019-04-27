@@ -74,7 +74,7 @@ namespace Aviato.Controllers
             {
                 //var zauzetiPiloti = (from l in db.Let
                 //                     where l.VremePoletanja != DateTime.Now
-                //                     select l.Pilot).ToList();
+                //                     select l.Pilot ).ToList();
                 //var zauzetiKopiloti = (from l in db.Let
                 //                       where l.VremePoletanja != DateTime.Now
                 //                       select l.Kopilot).ToList();

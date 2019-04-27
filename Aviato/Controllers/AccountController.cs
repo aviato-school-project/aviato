@@ -15,6 +15,7 @@ using System.Web.UI;
 
 namespace Aviato.Controllers
 {
+    [HandleError]
     [Authorize]
     public class AccountController : Controller
     {
