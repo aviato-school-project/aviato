@@ -373,3 +373,5 @@ C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.csproj.CopyComplete
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.dll
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.pdb
 C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.Migrations.EditUpdate_01.resources
+C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.Migrations.dodatLetUEZVM.resources
+C:\wamp\www\aviato\Aviato\obj\Debug\Aviato.Migrations.addedAvionToCommonViewModel.resources

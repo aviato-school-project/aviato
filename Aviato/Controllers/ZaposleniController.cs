@@ -5,22 +5,22 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+//using System.Web;
 using System.Web.Mvc;
 using Aviato.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
-using System.Web.Security;
+//using Microsoft.AspNet.Identity.EntityFramework;
+//using Microsoft.AspNet.Identity;
+//using System.Web.Security;
 using Aviato.ViewModels;
-using Microsoft.AspNet.Identity.Owin;
-using Aviato.Migrations;
+//using Microsoft.AspNet.Identity.Owin;
+//using Aviato.Migrations;
 
 namespace Aviato.Controllers
 {
+    [Authorize(Roles = "Admin, SuperUser")]
     public class ZaposleniController : Controller
     {
         public ApplicationDbContext db = new ApplicationDbContext();
-        //private Task _userManager;
 
         // GET: Zaposleni
         public ActionResult Index()
@@ -48,23 +48,20 @@ namespace Aviato.Controllers
                                         JMBG = p.JMBG,
                                         GodinaRođenja = p.GodinaRodjenja,
                                         Pozicija = string.Join(",", p.Pozicija)
-                                    });
+                                    }).OrderBy(p => p.Pozicija);
             return View(PrikaziZaposlene);
         }
 
         // GET: Zaposleni/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            //var context = new IdentityDbContext();
-            //var email = context.Users.ToList();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);
 
-            var rola = string.Join(", ", getRoleByUserId(zaposleni.IdentityId));
+            var rola = string.Join(", ", GetRoleByUserId(zaposleni.IdentityId));
             ViewBag.Pozicija = rola;
             ViewBag.Email = (from U in db.Users
                              where U.Id == zaposleni.IdentityId
@@ -94,10 +91,6 @@ namespace Aviato.Controllers
                                  on m.Licenca equals t.TipId
                                  where m.MehanicarId == zaposleni.ZaposleniId
                                  select m).ToList();
-                               //new  {
-                               //    Naziv = t.NazivTipa,
-                               //    Datum = m.DatumLicence
-                               //}).ToList();
 
                 ViewBag.Detalji = mehanicar;
             }
@@ -133,11 +126,7 @@ namespace Aviato.Controllers
         }
         // GET: Zaposleni/Edit/5
         public async Task<ActionResult> Edit(int? id)
-        {
-            
-            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-            //var UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
-            
+        {            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -145,16 +134,8 @@ namespace Aviato.Controllers
 
             Zaposleni zaposleni = await db.Zaposleni.FindAsync(id);
 
-            var rola = getRoleByUserId(zaposleni.IdentityId);
-            //var rola = (from U in db.Users
-            //            where U.Id == zaposleni.IdentityId
-            //            select new
-            //            {
-            //                Pozicija = (from UR in U.Roles
-            //                            join R in db.Roles
-            //                            on UR.RoleId equals R.Id
-            //                            select R.Name)
-            //            }).First();
+            var rola = GetRoleByUserId(zaposleni.IdentityId);
+
             ViewBag.Pozicija = string.Join(", ", rola);
             EditUsersViewModel EZVM = new EditUsersViewModel()
             {
@@ -362,7 +343,8 @@ namespace Aviato.Controllers
             base.Dispose(disposing);
         }
 
-        private IEnumerable<string> getRoleByUserId(string id)
+        #region Helpers
+        public IEnumerable<string> GetRoleByUserId(string id)
         {
             var rola = (from U in db.Users
                         where U.Id == id
@@ -374,6 +356,7 @@ namespace Aviato.Controllers
                                         select R.Name)
                         }).First();
             return rola.Pozicija;
-        }
+        } 
+        #endregion
     }
 }

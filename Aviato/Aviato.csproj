@@ -293,6 +293,14 @@
     <Compile Include="Migrations\201904221629122_EditUpdate_01.Designer.cs">
       <DependentUpon>201904221629122_EditUpdate_01.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904251255205_dodatLetUEZVM.cs" />
+    <Compile Include="Migrations\201904251255205_dodatLetUEZVM.Designer.cs">
+      <DependentUpon>201904251255205_dodatLetUEZVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904261409390_addedAvionToCommonViewModel.cs" />
+    <Compile Include="Migrations\201904261409390_addedAvionToCommonViewModel.Designer.cs">
+      <DependentUpon>201904261409390_addedAvionToCommonViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Avion.cs" />
@@ -412,38 +420,24 @@
     <Content Include="Views\Zaposleni\Details.cshtml" />
     <Content Include="Views\Zaposleni\mEdit.cshtml" />
     <Content Include="Views\Zaposleni\Index1.cshtml" />
-    <Content Include="Views\Stjuard1\Create.cshtml" />
-    <Content Include="Views\Stjuard1\Delete.cshtml" />
-    <Content Include="Views\Stjuard1\Details.cshtml" />
-    <Content Include="Views\Stjuard1\Edit.cshtml" />
-    <Content Include="Views\Stjuard1\Index.cshtml" />
     <Content Include="Views\Shared\PilotPV.cshtml" />
-    <Content Include="Views\Mehanicar1\Create.cshtml" />
-    <Content Include="Views\Mehanicar1\Delete.cshtml" />
-    <Content Include="Views\Mehanicar1\Details.cshtml" />
-    <Content Include="Views\Mehanicar1\Edit.cshtml" />
-    <Content Include="Views\Mehanicar1\Index.cshtml" />
-    <Content Include="Views\Pilot1\Create.cshtml" />
-    <Content Include="Views\Pilot1\Delete.cshtml" />
-    <Content Include="Views\Pilot1\Details.cshtml" />
-    <Content Include="Views\Pilot1\Edit.cshtml" />
-    <Content Include="Views\Pilot1\Index.cshtml" />
     <Content Include="Views\Pilot\Create.cshtml" />
     <Content Include="Views\Stjuard\Create.cshtml" />
     <Content Include="Views\Mehanicar\Create.cshtml" />
+    <Content Include="Views\Zaposleni\Index.cshtml" />
+    <Content Include="Views\Zaposleni\Edit.cshtml" />
+    <Content Include="Views\Stjuard\Edit.cshtml" />
     <Content Include="Views\Let\Create.cshtml" />
     <Content Include="Views\Let\Delete.cshtml" />
     <Content Include="Views\Let\Details.cshtml" />
     <Content Include="Views\Let\Edit.cshtml" />
     <Content Include="Views\Let\Index.cshtml" />
-    <Content Include="Views\Zaposleni\Index.cshtml" />
-    <Content Include="Views\Zaposleni\Edit.cshtml" />
-    <Content Include="Views\Stjuard\Edit.cshtml" />
+    <Content Include="Views\Home\ServisAviona.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\EZVM\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -534,6 +528,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904221629122_EditUpdate_01.resx">
       <DependentUpon>201904221629122_EditUpdate_01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904251255205_dodatLetUEZVM.resx">
+      <DependentUpon>201904251255205_dodatLetUEZVM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904261409390_addedAvionToCommonViewModel.resx">
+      <DependentUpon>201904261409390_addedAvionToCommonViewModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

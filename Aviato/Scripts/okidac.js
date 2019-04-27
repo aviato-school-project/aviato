@@ -1,30 +1,29 @@
 ﻿let okidac = document.querySelector(".okidac");
-var moguciJezici = []; // Lista sve jezike koje je moguće izabrati kao "Engleski"
+var moguceVrednosti = []; // Lista sve jezike koje je moguće izabrati kao "Engleski"
 window.onload = () => {
     /*
      * Pošto pri učitavanju podataka iz baze, 
      * vrednosti bivaju upisane u innerHTML input elementa
      * umesto u value, ova funkcija ih vraća u value
      */
-
     let polja = document.querySelectorAll('.polje'),
         datumi = document.querySelectorAll('.datum');
     let stvarneVrednosti = [];
+    if (document.URL.split('/')[3] !== "Let") {
+        let node = polja[0].options; // iščitava iz bilo kog polja koji su sve jezici dostupni
+        if (node != undefined) {
+            for (let i = 1; i < node.length; i++) {
+                moguceVrednosti.push(node[i].label);
+            }
 
-    let nodeJezika = polja[0].options; // iščitava iz bilo kog polja koji su sve jezici dostupni
-    if (nodeJezika != undefined) {
-        for (let i = 1; i < nodeJezika.length; i++) {
-            moguciJezici.push(nodeJezika[i].label);
-        }
-
-        for (let polje of polja) {
-            let stvarnaVrednost = polje.options[0].innerHTML; // u innerHTML-u 0-tog rezultata je jezik koga baza vraća kao "Engleski"
-            stvarneVrednosti.push(moguciJezici.indexOf(stvarnaVrednost) + 1); // pravi array stvarno odabranih jezika, kao njihove id-ijeve
-            polje.value = moguciJezici.indexOf(stvarnaVrednost) + 1; // dodeljuje kao value stvarno izabran jezik
+            for (let polje of polja) {
+                let stvarnaVrednost = polje.options[0].innerHTML; // u innerHTML-u 0-tog rezultata je jezik koga baza vraća kao "Engleski"
+                stvarneVrednosti.push(moguceVrednosti.indexOf(stvarnaVrednost) + 1); // pravi array stvarno odabranih jezika, kao njihove id-ijeve
+                polje.value = moguceVrednosti.indexOf(stvarnaVrednost) + 1; // dodeljuje kao value stvarno izabran jezik
+            }
         }
     }
-    
-   
+
     /*
      * Ovaj loop prikazuje samo datum, umesto datuma i vremena u datetime polju
      */
@@ -34,25 +33,48 @@ window.onload = () => {
     }
 }
 
+/**
+ * Očitava vrednost kao primary key, npr 1, a vraća ljudski prepoznatljiv string,
+ * kao npr "Engleski" ili "Sreten Dudić"
+ * u svrhu obaveštavanja korisnika kad odabere dve iste vrednosti
+ * kada će se na ekranu ispisati koja vrednost je uneta dva puta.
+ */
+
 function vratiPrave(val) {
     let pozicija,
         polje = document.querySelector('.polje').options;
+    
+    //if (document.URL.split('/')[3] == "Let" && document.URL.split('/')[4] == "Create") {
+        
+        
+    //    console.log($0.textContent.split("\n"))
+    //    let duplikat = polje.options[polje.options.selectedIndex].innerHTML;
+    //    return duplikat
+    //}
+    //if (document.URL.split('/')[3] == "Let") {
+    //    let polje = document.querySelectorAll('.polje');
+    //    for (let p of polje) {
+    //        if (p.value == val) {
+    //            var duplikat = p.textContent.split('\n')[p.options.selectedIndex];
+    //        }
+    //    }
+    //    return duplikat
+    //}
     if (!document.querySelector('#RoleName') == null) {
         pozicija = document.querySelector('#RoleName').value;
     }
-
     if (pozicija == "Stjuard") {
         let duplikat = polje[val - 1].innerHTML;
         return duplikat;
     }
-    else if (pozicija == "Mehaničar") {
+    else if (pozicija == "Mehaničar" || document.URL.split('/')[4] == "Edit") {
         let duplikat = polje[val].innerHTML;
         return duplikat;
     }
-    else if (document.URL.split('/')[4] == "Edit") {
-        let duplikat = polje[val].innerHTML;
-        return duplikat
-    }
+    //else if (document.URL.split('/')[4] == "Edit") {
+    //    let duplikat = polje[val].innerHTML;
+    //    return duplikat
+    //}
 }
 
 var pass = document.querySelector("#pass"),
@@ -72,7 +94,7 @@ var pass = document.querySelector("#pass"),
         for (let jezik of izabraniJezici) {
             if (jezik.value == "") {
                 let trenutniJezik = jezik.options[0].innerHTML; // String kao "Engleski" za jezik koji je baza izbacila [0]
-                jeziciZaUnos.push(moguciJezici.indexOf(trenutniJezik) + 1)
+                jeziciZaUnos.push(moguceVrednosti.indexOf(trenutniJezik) + 1)
             }
             else {
                 jeziciZaUnos.push(Number(jezik.value)); // Prepoznaje odabrani jezik u trenutno posmatranom select polju, i ubacuje ga u array}
@@ -93,18 +115,19 @@ var pass = document.querySelector("#pass"),
             }
         }
 
+        /*
+         * Proverava da se ne unese ista vrednost dva puta
+         */
         let test = [];
         test[0] = poljaZaUnos[0].value;
-
         for (let i = 1; i < poljaZaUnos.length; i++) {
-            
+            console.log(poljaZaUnos[i])
             if (test.includes(poljaZaUnos[i].value)) {
                 let val = poljaZaUnos[i].value;
                 alert(`Uneli ste ${vratiPrave(val)} više puta, proverite svoj unos`);
                 return false;
             }
             else {
-                
                 test.push(poljaZaUnos[i].value);
             }
         }

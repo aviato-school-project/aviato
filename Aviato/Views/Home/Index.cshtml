@@ -1,24 +1,99 @@
-﻿@{
+﻿@model Aviato.ViewModels.EditUsersViewModel
+
+@{
     ViewBag.Title = "Aviato";
 }
 
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>*@
-    <h4 class="cst-login-subtitle cst-light-blue-clr font-weight-light text-center">Kontrola leta</h4>
+<h4 class="cst-login-subtitle cst-light-blue-clr font-weight-light text-center">@Model.Zaposleni.Ime @Model.Zaposleni.Prezime, dobrodošli u <span class="fab fa-aviato"></span></h4>
 <div class="row">
-    @*<div class="col-md-4">
-        <h2>Piloti</h2>
-        <p>Lorem ipsum blah blah</p>
+    <div class="col-md-12">
+        <p></p>
+
+        Ulogovani ste kao @ViewBag.Email
+        <hr />
+        @if (@ViewBag.Rola == "SuperUser")
+        {
+            <ul>
+                <li>@Html.ActionLink("Kontrola zaposlenih", "Index", "Zaposleni")</li>
+                <li>@Html.ActionLink("Kontrola leta", "Index", "Let")</li>
+                <li>@Html.ActionLink("Destinacije", "Index", "Destinacija")</li>
+                <li>@Html.ActionLink("Jezici", "Index", "Jezik")</li>
+                <li>@Html.ActionLink("Tipovi aviona", "Index", "Tip")</li>
+                <li>@Html.ActionLink("Avioni", "Index", "Avion")</li>
+                <li>Lista linkova ovde</li>
+            </ul>
+
+        }
+        else if (@ViewBag.Rola == "Admin")
+        {
+            <ul>
+                <li>@Html.ActionLink("Kontrola zaposlenih", "Index", "Zaposleni")</li>
+                <li>@Html.ActionLink("Kontrola leta", "Index", "Let")</li>
+                <li>@Html.ActionLink("Pošalji avion na servis", "Index", "Avion")</li>
+            </ul>
+        }
+        @if (@ViewBag.Rola == "Pilot")
+        {
+            <hr />
+
+            if (Model.Pilot.OcenaZS)
+            {
+                <p>Sledeći lekarski pregled @Model.Pilot.PoslednjiMedicinski.AddMonths(6).ToString("dd/MM/yyyy")</p>
+            }
+            else
+            {
+                <p>Sledeći lekarski pregled @Model.Pilot.PoslednjiMedicinski.AddMonths(1).ToString("dd/MM/yyyy")</p>
+            }
+
+        }
+        @if (@ViewBag.Rola == "Stjuard" || @ViewBag.Rola == "Pilot")
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Avion
+                    </th>
+                    <th>
+                        Destinacija
+                    </th>
+                    <th>
+                        Vreme leta
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Let)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Avion1.SifraAviona)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Destinacija1.Naziv)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VremePoletanja)
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        }
+        else if (@ViewBag.Rola == "Mehaničar")
+        {
+            <hr />
+            <p>Avioni za servis:</p>
+            foreach (var a in Model.Avions)
+            {
+                <hr />
+                //@Html.HiddenFor(Model => a.AvionId)
+                @Html.DisplayFor(Model => a.SifraAviona) <span> | </span>
+                @Html.ActionLink("Servisiraj", "ServisAviona", new { id = a.AvionId} )
+            }
+        }
+
+        <hr />
+        @Html.ActionLink("Promenite password", "ChangePassword", "Manage")
     </div>
-    <div class="col-md-4">
-        <h2>Stjuardi</h2>
-        <p>Lorem ipsum blah blah</p>
-    </div>
-    <div class="col-md-4">
-        <h2>Mehaničari</h2>
-        <p>Lorem ipsum blah blah</p>
-    </div>*@
 </div>

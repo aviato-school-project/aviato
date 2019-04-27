@@ -15,6 +15,7 @@ namespace Aviato.ViewModels
         {
             Mehanicar = new HashSet<Mehanicar>();
             Stjuard = new HashSet<Stjuard>();
+            Let = new HashSet<Let>();
         }
         public int Id { get; set; }
         [Column("ZaposleniObj")]
@@ -26,10 +27,12 @@ namespace Aviato.ViewModels
         //public int MehanicarId { get; set; }
         [Column("StjuardObj")]
         public virtual ICollection<Stjuard> Stjuard { get; set; }
-        //public int StjuardId { get; set; }
+        [Column("LetoviObj")]
+        public virtual ICollection<Let> Let { get; set; }
+
+        public virtual ICollection<Avion> Avions { get; set; }
 
         public string JeziciZaUnos { get; set; }
-
         public string tipoviZaUnos { get; set; }
         public string datumiZaUnos { get; set; }
     }

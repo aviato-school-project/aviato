@@ -104,7 +104,7 @@ namespace Aviato.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Neispravni login podaci.");
                     return View(model);
             }
         }
@@ -154,7 +154,9 @@ namespace Aviato.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin, SuperUser")]
+
         public ActionResult Register()
         {
             popuniRole();
@@ -165,6 +167,7 @@ namespace Aviato.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
+        [Authorize(Roles = "Admin, SuperUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -512,7 +515,7 @@ namespace Aviato.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -528,7 +531,11 @@ namespace Aviato.Controllers
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var role in RoleManager.Roles)
             {
-                list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+                if(role.Name != "SuperUser")
+                {
+                    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+                }
+                
             }
             ViewBag.Roles = list;
         }

@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    
     padding-bottom: 20px;
     color: cornflowerblue;
 }
@@ -23,4 +23,16 @@ select,
 textarea {
     max-width: 280px;
     text-align: center !important;
+}
+input {
+    background: darkslategrey !important;
+    color: white !important;
+}
+
+.fa-aviato {
+    font-size: 40px;
+    /*display: inline-block;*/
+    position: relative;
+    bottom: -13px;
+    margin: 0 5px;
 }

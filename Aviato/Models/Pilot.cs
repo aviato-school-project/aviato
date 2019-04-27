@@ -12,6 +12,7 @@ namespace Aviato.Models
         public int PilotId { get; set; }
         [Display(Name = "Poslednji lekarski pregled")]
         [Column(TypeName = "smalldatetime")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime PoslednjiMedicinski { get; set; }
 
         [Display(Name = "Ocena zdravstvenog stanja")]

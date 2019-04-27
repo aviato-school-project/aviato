@@ -1,10 +1,13 @@
 ﻿namespace Aviato.Models
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Zaposleni")]
     public partial class Zaposleni
@@ -61,6 +64,19 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stjuard> Stjuard { get; set; }
 
+        public static List<Zaposleni> ZaposleniPoRoli(string rola)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<IdentityUser> UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            var zaposleniId = db.Users.ToList().Where(x => UserManager.IsInRole(x.Id, rola)).ToList();
+            List<Zaposleni> listaZaposlenih = new List<Zaposleni>();
+            foreach (var zap in zaposleniId)
+            {
+                Zaposleni zaposleni = db.Zaposleni.Where(z => z.IdentityId == zap.Id).Select(z => z).FirstOrDefault();
+                listaZaposlenih.Add(zaposleni);
+            }
 
+            return listaZaposlenih;
+        }
     }
 }

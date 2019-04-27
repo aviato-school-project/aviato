@@ -16,34 +16,58 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header" style="display:inline;">
-                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>*@
-                @*<span class="fab fa-aviato"></span>*@
-                @*@Html.ActionLink("Aviato", "Index", "Home", new { area = "t" }, new { @class = "navbar-brand" })*@
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav" style="display:inline;">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Role", "Index", "Role")</li>*@
-                    <li>@Html.ActionLink("Destinacije", "Index", "Destinacija")</li>
-                    <li>@Html.ActionLink("Jezici", "Index", "Jezik")</li>
-                    <li>@Html.ActionLink("Avioni", "Index", "Avion")</li>
-                    <li>@Html.ActionLink("Tipovi aviona", "Index", "Tip")</li>
-                    <li>@Html.ActionLink("Letovi", "Index", "Let")</li>
+    
 
-                </ul>
-                @Html.Partial("_LoginPartial", new { @style = "display: inline;" })
+        @if (Request.IsAuthenticated)
+        {
+            <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header" style="display:inline;">
+                    @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>*@
+                    @*<span class="fab fa-aviato"></span>*@
+                    @*@Html.ActionLink("Aviato", "Index", "Home", new { area = "t" }, new { @class = "navbar-brand" })*@
+                </div>
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav" style="display:inline;">
+
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        @if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("SuperUser"))
+                        {
+                            @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Role", "Index", "Role")</li>*@
+                            if (Roles.IsUserInRole("SuperUser"))
+                            {
+                                <li>@Html.ActionLink("Destinacije", "Index", "Destinacija")</li>
+                                <li>@Html.ActionLink("Jezici", "Index", "Jezik")</li>
+                                <li>@Html.ActionLink("Tipovi aviona", "Index", "Tip")</li>
+                                <li>@Html.ActionLink("Avioni", "Index", "Avion")</li>
+                            }
+
+
+
+                            <li>@Html.ActionLink("Letovi", "Index", "Let")</li>
+                            <li>@Html.ActionLink("Zaposleni", "Index", "Zaposleni")</li>
+
+                        }
+
+                    </ul>
+
+                    @Html.Partial("_LoginPartial", new { @style = "display: inline;" })
+                </div>
             </div>
         </div>
-    </div>
+        }
+
+
+
+            
+        
     <div class="cst-all-wrapper">
         <div class="cst-all-wrapper-inside py-lg-4">
             <div class="container-fluid cst-login-container h-100">
@@ -72,8 +96,16 @@
                             </div>-->
                             @RenderBody()
                             <hr />
+                            
                             <footer>
-                                <p>&copy; @DateTime.Now.Year - Aviato <span class="fab fa-aviato"></span>, powered by ČĎŠ</p>
+
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Početna", "Index", "Home") <span> | </span>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Izloguj se</a><span> | </span>
+                                }
+                                    &copy; @DateTime.Now.Year <span class="fab fa-aviato"></span> powered by ČĎŠ
+                                    
                             </footer>
                         </div>
                     </div>

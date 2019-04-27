@@ -1,36 +1,26 @@
 ﻿@model IEnumerable<Aviato.Models.Let>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pregled letova";
 }
 
-<h2>Index</h2>
+<h2>Pregled letova</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Postavi novi let", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Avion1.SifraAviona)
+            Destinacija
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Destinacija1.Naziv)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zaposleni.JMBG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zaposleni1.JMBG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zaposleni2.JMBG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zaposleni3.JMBG)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.VremePoletanja)
+        </th>
+
+        <th>
+            Avion
         </th>
         <th></th>
     </tr>
@@ -38,30 +28,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Avion1.SifraAviona)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Destinacija1.Naziv)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.Zaposleni.JMBG)
+            @Html.DisplayFor(modelItem => item.VremePoletanja )
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Zaposleni1.JMBG)
+            @Html.DisplayFor(modelItem => item.Avion1.SifraAviona)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Zaposleni2.JMBG)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Zaposleni3.JMBG)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VremePoletanja)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LetId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LetId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LetId })
+            @Html.ActionLink("Detalji", "Details", new { id = item.LetId })
         </td>
     </tr>
 }

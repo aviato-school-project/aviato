@@ -18,6 +18,7 @@ namespace Aviato.ViewModels
         public string Pozicija { get; set; } // Rola
         public int ZaposleniId { get; set; }
         public string JMBG { get; set; }
+        [Display(Name = "Godina rođenja")]
         public int GodinaRođenja { get; set; }
     }
 }

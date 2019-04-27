@@ -38,12 +38,31 @@
             @Html.DisplayFor(modelItem => item.GodinaProizvodnje)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ServisniStatus)
+            @*@Html.DisplayFor(modelItem => item.ServisniStatus)*@
+            @if (item.ServisniStatus)
+            {
+                <span>Neaktivan</span>
+            }
+            else
+            {
+                <span>Aktivan</span>
+            }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AvionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AvionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AvionId })
+            @if (Roles.IsUserInRole("SuperUser"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.AvionId }) <span> | </span>
+                @Html.ActionLink("Details", "Details", new { id = item.AvionId }) <span> | </span>
+                @Html.ActionLink("Delete", "Delete", new { id = item.AvionId })
+            }
+            @if (Roles.IsUserInRole("Admin"))
+            {
+                if (item.ServisniStatus == false)
+                {
+                    @Html.ActionLink("Servis", "ServisAviona", "Home", new { id = item.AvionId }, null)
+                }
+            }
+
         </td>
     </tr>
 }
