@@ -49,17 +49,17 @@ namespace Aviato.Models
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Molimo unesite svoj email")]
+        //[Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Molimo unesite svoj password")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        //[Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Upamti me?")]
         public bool RememberMe { get; set; }
     }
 

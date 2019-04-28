@@ -3,13 +3,9 @@ using Aviato.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -30,30 +26,33 @@ namespace Aviato.Controllers
             // Vraća rolu trenutno ulogovanog usera
             var role = await RoleManager.FindByIdAsync(user.Roles.First().RoleId);
 
-            //ViewBag.UserId = user.Id;
             ViewBag.Email = user.Email;
             ViewBag.Rola = role.Name;
 
             EditUsersViewModel ezvm = new EditUsersViewModel();
 
+            // Vraća zaposlenog koji je trenutno ulogovan
             ezvm.Zaposleni = db.Zaposleni.Where(z => z.IdentityId == user.Id).Select(z => z).First();
             int id = ezvm.Zaposleni.ZaposleniId;
 
             if (role.Name == "Pilot")
             {
+                // Trenutno ulogovani pilot
                 ezvm.Pilot = db.Pilot.Where(p => p.SifraPilota == id).Select(p => p).First();
+                // Letovi za trenutno ulogovanog pilota
                 ezvm.Let = db.Let.Where(l => l.Pilot == id || l.Kopilot == id).Select(l => l).Where(l => l.VremePoletanja > DateTime.Now).OrderBy(l => l.VremePoletanja).ToList();
             }
             else if (role.Name == "Stjuard")
             {
-                //ezvm.Stjuard = db.Stjuard.Where(s => s.StjuardId == id).Select(s => s).ToList();
+                // Letovi za trenutno ulogovanog stjuarda
                 ezvm.Let = db.Let.Where(l => l.Stjuard1 == id || l.Stjuard2 == id).Select(l => l).Where(l => l.VremePoletanja > DateTime.Now).OrderBy(l => l.VremePoletanja).ToList();
             }
             else if (role.Name == "Mehaničar")
             {
+                // Trenutno ulogovani mehaničar
                 ezvm.Mehanicar = db.Mehanicar.Where(m => m.MehanicarId == id).Select(m => m).ToList();
                 var licence = ezvm.Mehanicar.Select(m => m.Licenca).ToList();
-                //ezvm.Avions = db.Avion.Where(a => a.ServisniStatus == false).Select(a => a).Ex(a => a.Tip.TipId == licence).ToList();
+                // Neispravni avioni za koje trenutno ulogovani mehaničar ima licence
                 ezvm.Avions = (from a in db.Avion join m in db.Mehanicar on a.TipAviona equals m.Tip.TipId
                                where a.ServisniStatus == true
                                select a
@@ -75,8 +74,6 @@ namespace Aviato.Controllers
             {
                 return HttpNotFound();
             }
-            //var avion = db.Avion.Where(a => a.AvionId == id).Select(a => a).First();
-
             return View(avion);
         }
 
@@ -94,7 +91,6 @@ namespace Aviato.Controllers
             servis.ServisniStatus = avion.ServisniStatus;
             if (ModelState.IsValid)
             {
-                //db.Entry(avion).State = EntityState.Modified;
                 db.SaveChanges();
                 if(Roles.IsUserInRole("Mehaničar"))
                 {
@@ -102,6 +98,7 @@ namespace Aviato.Controllers
                 }
                 else
                 {
+                    // Da admina ne bi vraćao na home page
                     return RedirectToAction("Index", "Avion");
                 }
             }
@@ -111,11 +108,28 @@ namespace Aviato.Controllers
             }
         }
 
-        //public ActionResult Contact()
-        //{
-        //    ViewBag.Message = "Your contact page.";
 
-        //    return View();
-        //}
+        public JsonResult SkupiLetove()
+        {
+            int id = TrenutnoUlogovaniZaposleni();
+
+            db.Configuration.ProxyCreationEnabled = false;
+
+            var letovi = db.Let.Where(l => l.Pilot == id || l.Kopilot == id || l.Stjuard1 == id || l.Stjuard2 == id ).Select(l => l).ToList();
+            return new JsonResult { Data = letovi, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        protected int TrenutnoUlogovaniZaposleni()
+        {
+            // Vraća User Id trenutno ulogovanog usera
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            // Vraća rolu trenutno ulogovanog usera
+            var role = RoleManager.FindById(user.Roles.First().RoleId);
+
+            // Vraća zaposlenog koji je trenutno ulogovan
+            int id = db.Zaposleni.Where(z => z.IdentityId == user.Id).Select(z => z.ZaposleniId).First();
+
+            return id;
+        }
     }
 }

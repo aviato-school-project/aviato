@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#FFAA01">
-    @*<title>Aviato Login</title>*@
     <title>@ViewBag.Title - Dobrodošli u Aviato</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/style.css">
@@ -16,18 +15,18 @@
 
 </head>
 <body>
-    
 
-        @if (Request.IsAuthenticated)
-        {
-            <div class="navbar navbar-inverse navbar-fixed-top">
+
+    @if (Request.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header" style="display:inline;">
                     @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </button>*@
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>*@
                     @*<span class="fab fa-aviato"></span>*@
                     @*@Html.ActionLink("Aviato", "Index", "Home", new { area = "t" }, new { @class = "navbar-brand" })*@
                 </div>
@@ -38,36 +37,25 @@
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         @if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("SuperUser"))
                         {
-                            @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("Role", "Index", "Role")</li>*@
                             if (Roles.IsUserInRole("SuperUser"))
                             {
                                 <li>@Html.ActionLink("Destinacije", "Index", "Destinacija")</li>
                                 <li>@Html.ActionLink("Jezici", "Index", "Jezik")</li>
                                 <li>@Html.ActionLink("Tipovi aviona", "Index", "Tip")</li>
                                 <li>@Html.ActionLink("Avioni", "Index", "Avion")</li>
+                                <li>@Html.ActionLink("Role", "Index", "Role")</li>
                             }
-
-
 
                             <li>@Html.ActionLink("Letovi", "Index", "Let")</li>
                             <li>@Html.ActionLink("Zaposleni", "Index", "Zaposleni")</li>
-
                         }
-
                     </ul>
-
                     @Html.Partial("_LoginPartial", new { @style = "display: inline;" })
                 </div>
             </div>
         </div>
-        }
+    }
 
-
-
-            
-        
     <div class="cst-all-wrapper">
         <div class="cst-all-wrapper-inside py-lg-4">
             <div class="container-fluid cst-login-container h-100">
@@ -77,26 +65,9 @@
                             <div class="cst-logo-holder mx-auto mt-3 pt-4">
                                 <img class="img-fluid" src="~/Images/logo-transparent.png" alt="logo">
                             </div>
-
-                            <!--<div class="form-holder mt-4">
-                                <form class="cst-form mx-auto mt-5 pt-5" action="" method="post">
-                                    <div class="form-group cst-form-group mt-4">
-                                        <input class="form-control cst-input" type="text" name="imePrezime" id="imePrezime" required="true">
-                                        <label class="cst-label" for="imePrezime"><i class="material-icons cst-input-icon">person_outline</i><span>Ime i prezime</span></label>
-                                    </div>
-                                    <div class="cst-login-dummy mt-4"></div>
-                                    <div class="form-group cst-form-group mt-5">
-                                        <input class="form-control cst-input" type="password" id="password" required="true">
-                                        <label class="cst-label" for="password"><i class="material-icons cst-input-icon">lock</i><span>Password</span></label>
-                                    </div>
-                                    <label class="cst-label-plain" for="togglePassword">show password</label>
-                                    <input type="checkbox" id="togglePassword"><br>
-
-                                </form>
-                            </div>-->
                             @RenderBody()
                             <hr />
-                            
+
                             <footer>
 
                                 @if (Request.IsAuthenticated)
@@ -104,8 +75,8 @@
                                     @Html.ActionLink("Početna", "Index", "Home") <span> | </span>
                                     <a href="javascript:document.getElementById('logoutForm').submit()">Izloguj se</a><span> | </span>
                                 }
-                                    &copy; @DateTime.Now.Year <span class="fab fa-aviato"></span> powered by ČĎŠ
-                                    
+                                &copy; @DateTime.Now.Year <span class="fab fa-aviato"></span> powered by ČĎŠ
+
                             </footer>
                         </div>
                     </div>
@@ -113,41 +84,38 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
 
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker3').datetimepicker({
-                format: 'M/DD/YYYY'
-            });
-        });
-    </script>
-    <script src="~/Scripts/plus.js"></script>
-    <script type="text/javascript">
-            //$(function () {
-            //    $('.datetimepicker3').datetimepicker({
-            //        format: 'M/DD/YYYY'
-            //    });
-            //});
-        function insertCalendar() {
-            $('.datetimepicker3').datetimepicker({
+    @*<script type="text/javascript">*@
+    @*<script>
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
                     format: 'M/DD/YYYY'
                 });
+            });
+        </script>*@
+    <script src="~/Scripts/plus.js"></script>
+    <script type="text/javascript">
+        //$(function () {
+        //    $('.datetimepicker3').datetimepicker({
+        //        format: 'M/DD/YYYY'
+        //    });
+        //});
+        function insertCalendar() {
+            $('.datetimepicker3').datetimepicker({
+                format: 'M/DD/YYYY'
+            });
         }
         insertCalendar()
-        </script>
+    </script>
 </body>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
 </html>

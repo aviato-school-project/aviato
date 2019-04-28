@@ -12,6 +12,7 @@ using Aviato.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.UI;
+using System.Web.Security;
 
 namespace Aviato.Controllers
 {
@@ -163,7 +164,7 @@ namespace Aviato.Controllers
             popuniRole();
             return View();
         }
-        public List<int> JeziciZaUnos { get; set; }
+        //public List<int> JeziciZaUnos { get; set; }
         //
         // POST: /Account/Register
         [HttpPost]
@@ -212,7 +213,6 @@ namespace Aviato.Controllers
 
                     else if (rola == "Stjuard")
                     {
-                        
                         var jezici = (model.JeziciZaUnos.Split(','));
                         if (ModelState.IsValid)
                         {
@@ -527,12 +527,22 @@ namespace Aviato.Controllers
             return View();
         }
 
+        /*
+         * Vraća listu svih rola, osim SuperUser koju vraća jedino kada je ulogovani user, SuperUser
+         */
         private void popuniRole()
         {
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var role in RoleManager.Roles)
             {
-                if(role.Name != "SuperUser")
+                if(!Roles.IsUserInRole("SuperUser"))
+                {
+                    if (role.Name != "SuperUser")
+                    {
+                        list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+                    }
+                }
+                else if (Roles.IsUserInRole("SuperUser"))
                 {
                     list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
                 }

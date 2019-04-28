@@ -214,15 +214,9 @@ namespace Aviato.Controllers
 
                 if (EZVM.JeziciZaUnos != null)
                 {
-                    //ICollection<int> postojeciJezici = (from s in db.Stjuard
-                    //                                    where s.StjuardId == s.StjuardId
-                    //                                    select s.JezikId).ToList();
-                    //foreach (var j in postojeciJezici)
-                    //{
-                        db.Stjuard.RemoveRange(db.Stjuard.Where(x => x.StjuardId == EZVM.Zaposleni.ZaposleniId));
-                        await db.SaveChangesAsync();
-                    //}
-
+                    db.Stjuard.RemoveRange(db.Stjuard.Where(x => x.StjuardId == EZVM.Zaposleni.ZaposleniId));
+                    await db.SaveChangesAsync();
+                    
                     try
                     {
                         var jezici = EZVM.JeziciZaUnos.Split(',');
@@ -239,26 +233,13 @@ namespace Aviato.Controllers
                     {
                         Console.Write(e);
                     }
-                    
-
                     await db.SaveChangesAsync();
-
-                    //if (ModelState.IsValid)
-                    //{
-                    //    db.Entry(stju).State = EntityState.Modified;
-                    //}
                 }
 
                 else if (EZVM.tipoviZaUnos != null)
                 {
-                    //ICollection<int> postojeceLicence = (from m in db.Mehanicar
-                    //                                     where m.MehanicarId == EZVM.Zaposleni.ZaposleniId
-                    //                                     select m.Licenca).ToList();
-                    //foreach (var l in postojeceLicence)
-                    //{
-                        db.Mehanicar.RemoveRange(db.Mehanicar.Where(x => x.MehanicarId == EZVM.Zaposleni.ZaposleniId));
-                        await db.SaveChangesAsync();
-                    //}
+                    db.Mehanicar.RemoveRange(db.Mehanicar.Where(x => x.MehanicarId == EZVM.Zaposleni.ZaposleniId));
+                    await db.SaveChangesAsync();
 
                     var licence = EZVM.tipoviZaUnos.Split(',');
                     var datumi = EZVM.datumiZaUnos.Split(',');
@@ -271,7 +252,6 @@ namespace Aviato.Controllers
 
                         db.Mehanicar.Add(meh);
                     }
-
                     await db.SaveChangesAsync();
                 }
 

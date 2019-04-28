@@ -5,14 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Aviato.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-//using System.Web.Security;
-//using System.Diagnostics;
-//using System.Data.Entity.Validation;
 
 namespace Aviato.Controllers
 {
@@ -53,13 +49,12 @@ namespace Aviato.Controllers
 
             List<Zaposleni> piloti = Zaposleni.ZaposleniPoRoli("Pilot");
             List<Zaposleni> stjuardi = Zaposleni.ZaposleniPoRoli("Stjuard");
-
             
-
             ViewBag.Pilot = new SelectList(from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }, "ZaposleniId", "punoIme");
             ViewBag.Kopilot = new SelectList(from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }, "ZaposleniId", "punoIme");
             ViewBag.Stjuard1 = new SelectList(from s in stjuardi select new { s.ZaposleniId, punoIme = s.Ime + " " + s.Prezime }, "ZaposleniId", "punoIme");
             ViewBag.Stjuard2 = new SelectList(from s in stjuardi select new { s.ZaposleniId, punoIme = s.Ime + " " + s.Prezime }, "ZaposleniId", "punoIme");
+
             return View();
         }
 
@@ -70,28 +65,60 @@ namespace Aviato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "LetId,Destinacija,Avion,VremePoletanja,Pilot,Kopilot,Stjuard1,Stjuard2")] Let let)
         {
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                //var zauzetiPiloti = (from l in db.Let
-                //                     where l.VremePoletanja != DateTime.Now
-                //                     select l.Pilot ).ToList();
-                //var zauzetiKopiloti = (from l in db.Let
-                //                       where l.VremePoletanja != DateTime.Now
-                //                       select l.Kopilot).ToList();
-                //zauzetiPiloti.AddRange(zauzetiKopiloti);
                 if (let.Stjuard1 == let.Stjuard2)
                 {
-                    TempData["ispis"] = "Stjuardi moraju biti različiti";
+                    ViewBag.Greska = "Stjuardi moraju biti različiti";
                     return RedirectToAction("Create");
                 }
                 if (let.Pilot == let.Kopilot)
                 {
                     //return HttpNotFound();
-                    TempData["ispis"] = $"Piloti moraju biti različiti";
+                    ViewBag.Greska = "Piloti moraju biti različiti";
                     return RedirectToAction("Create");
                 }
 
-                
+                // Izabrano vreme trenutnog leta
+                var vreme = let.VremePoletanja;
+
+                // Vraća listu id-ijeva svih destinacija na koje već imamo letove u isto vreme
+                List<int> vecPutujemo = Let.ProveriDestinacie(vreme);
+
+                // Vraća listu već zauzetih aviona
+                List<int> vecZauzeti = Let.ProveriAvione(vreme);
+
+                // Vraća listu id-ijeva svih zaposlenih koji su u isto vreme angažovani na drugim letovima
+                List<int> vecAngazovani = Let.ProveriZaposlene(vreme);
+
+                if (vecPutujemo.Contains(let.Destinacija))
+                {
+                    var naziv = db.Destinacija.Where(d => d.DestinacijaId == let.Destinacija).Select(z => z.Naziv).First().ToString();
+
+                    ViewBag.Greska = $"Već imamo let za {naziv} u {vreme}";
+                }
+                else if (vecZauzeti.Contains(let.Avion))
+                {
+                    var naziv = db.Avion.Where(d => d.AvionId == let.Avion).Select(z => z.SifraAviona).First().ToString();
+
+                    ViewBag.Greska = $"Avion {naziv} je već zauzet u {vreme}";
+                }
+                else if (vecAngazovani.Contains(let.Pilot))
+                {
+                    ViewBag.Greska = $"Pilot, {vratiIme(let.Pilot)}, je već angazovan na drugom letu";
+                }
+                else if (vecAngazovani.Contains(let.Kopilot))
+                {
+                    ViewBag.Greska = $"Kopilot, {vratiIme(let.Kopilot)}, je već angazovan na drugom letu";
+                }
+                else if (vecAngazovani.Contains(let.Stjuard1))
+                {
+                    ViewBag.Greska = $"Prvi stjuard, {vratiIme(let.Stjuard1)}, je već angazovan na drugom letu";
+                }
+                else if (vecAngazovani.Contains(let.Stjuard2))
+                {
+                    ViewBag.Greska = $"Drugi stjuard, {vratiIme(let.Stjuard2)}, je već angazovan na drugom letu";
+                }
                 else
                 {
                     db.Let.Add(let);
@@ -100,13 +127,16 @@ namespace Aviato.Controllers
                 }
                
             }
+            List<Zaposleni> piloti = Zaposleni.ZaposleniPoRoli("Pilot");
+            List<Zaposleni> stjuardi = Zaposleni.ZaposleniPoRoli("Stjuard");
 
-            ViewBag.Avion = new SelectList(db.Avion, "AvionId", "SifraAviona", let.Avion);
+            ViewBag.Avion = new SelectList(db.Avion.Where(a => a.ServisniStatus == false), "AvionId", "SifraAviona", let.Avion);
             ViewBag.Destinacija = new SelectList(db.Destinacija, "DestinacijaId", "Naziv", let.Destinacija);
-            ViewBag.Kopilot = new SelectList(db.Zaposleni, "ZaposleniId", "Ime", let.Kopilot);
-            ViewBag.Pilot = new SelectList(db.Zaposleni, "Prezime", "Prezime", let.Pilot);
-            ViewBag.Stjuard1 = new SelectList(db.Zaposleni, "ZaposleniId", "Ime", let.Stjuard1);
-            ViewBag.Stjuard2 = new SelectList(db.Zaposleni, "ZaposleniId", "Ime", let.Stjuard2);
+            ViewBag.Kopilot = new SelectList(from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }, "ZaposleniId", "punoIme");
+            ViewBag.Pilot = new SelectList(from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }, "ZaposleniId", "punoIme");
+            ViewBag.Stjuard1 = new SelectList(from s in stjuardi select new { s.ZaposleniId, punoIme = s.Ime + " " + s.Prezime }, "ZaposleniId", "punoIme");
+            ViewBag.Stjuard2 = new SelectList(from s in stjuardi select new { s.ZaposleniId, punoIme = s.Ime + " " + s.Prezime }, "ZaposleniId", "punoIme");
+
             return View(let);
         }
 
@@ -140,8 +170,7 @@ namespace Aviato.Controllers
 
             ViewBag.Avion = new SelectList(db.Avion, "AvionId", "SifraAviona", let.Avion);
             ViewBag.Destinacija = new SelectList(db.Destinacija, "DestinacijaId", "Naziv", let.Destinacija);
-            
-            
+                        
             ViewBag.Kopilot = new SelectList((from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }), "ZaposleniId", "punoIme", let.Kopilot);
             ViewBag.Pilot = new SelectList((from p in piloti select new { p.ZaposleniId, punoIme = p.Ime + " " + p.Prezime }), "ZaposleniId", "punoIme", let.Pilot);
             ViewBag.Stjuard1 = new SelectList((from s in stjuardi select new { s.ZaposleniId, punoIme = s.Ime + " " + s.Prezime }), "ZaposleniId", "punoIme", let.Stjuard1);
@@ -162,6 +191,11 @@ namespace Aviato.Controllers
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
+
+                /*
+                 * U slučaju pogrešnog unosa strana se osvežava, da ne bi resetovala polja,
+                 * ovde se čuvaju odabarne vrednosti
+                 */
 
             List<Zaposleni> piloti = Zaposleni.ZaposleniPoRoli("Pilot");
             List<Zaposleni> stjuardi = Zaposleni.ZaposleniPoRoli("Stjuard");
@@ -208,6 +242,14 @@ namespace Aviato.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        protected string vratiIme(int id)
+        {
+            var ime = db.Zaposleni.Where(z => z.ZaposleniId == id).Select(z => z.Ime).First().ToString() + ' ' +
+                      db.Zaposleni.Where(z => z.ZaposleniId == id).Select(z => z.Prezime).First().ToString();
+
+            return ime;
         }
     }
 }

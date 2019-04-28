@@ -6,13 +6,16 @@
 
 <h2>Unos leta</h2>
 
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    <p class="text-danger">
+
+    </p>
     <div class="form-horizontal">
-        @*<h4>Let</h4>*@
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -31,62 +34,81 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-10">
             @Html.LabelFor(model => model.VremePoletanja, "Vreme poletanja", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VremePoletanja, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VremePoletanja, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(model => model.VremePoletanja, new { htmlAttributes = new { @class = "date form-control input-group  datetimepicker3", id = "datetimepicker3" } })
+            @Html.ValidationMessageFor(model => model.VremePoletanja, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Pilot, "Pilot", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("Pilot", null, htmlAttributes: new { @class = "form-control polje" })
-                @*@Html.DropDownList("Users", ViewBag.Users as SelectList);*@
                 @Html.ValidationMessageFor(model => model.Pilot, "", new { @class = "text-danger" })
                 @Html.ValidationMessageFor(model => model.Zaposleni, "", new { @class = "text-danger" })
             </div>
-                </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Kopilot, "Kopilot", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Kopilot", null, htmlAttributes: new { @class = "form-control polje" })
-                    @Html.ValidationMessageFor(model => model.Kopilot, "", new { @class = "text-danger" })
-                </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kopilot, "Kopilot", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Kopilot", null, htmlAttributes: new { @class = "form-control polje" })
+                @Html.ValidationMessageFor(model => model.Kopilot, "", new { @class = "text-danger" })
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Stjuard1, "Prvi stjuard", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Stjuard1", null, htmlAttributes: new { @class = "form-control polje" })
-                    @Html.ValidationMessageFor(model => model.Stjuard1, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.Zaposleni, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Stjuard2, "Drugi stjuard", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Stjuard2", null, htmlAttributes: new { @class = "form-control polje" })
-                    @Html.ValidationMessageFor(model => model.Stjuard2, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Unesi" class="btn btn-default okidac" />
-                </div>
-            </div>
-            </div>
-        }
-
-        <div>
-            @Html.ActionLink("Nazad na spisak letova", "Index")
         </div>
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.Stjuard1, "Prvi stjuard", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Stjuard1", null, htmlAttributes: new { @class = "form-control polje" })
+                @Html.ValidationMessageFor(model => model.Stjuard1, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Zaposleni, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Stjuard2, "Drugi stjuard", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Stjuard2", null, htmlAttributes: new { @class = "form-control polje" })
+                @Html.ValidationMessageFor(model => model.Stjuard2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Unesi" class="btn btn-default okidac" />@Html.Raw(ViewBag.Greska)
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.datetimepicker3').datetimepicker({
+            format: 'M/DD/YYYY'
+        });
+    });
+
+    $('.fa-plus-circle').on("click", function () {
+        $('.datetimepicker3').datetimepicker({
+            format: 'M/DD/YYYY'
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker3').datetimepicker({
+            format: 'M/DD/YYYY'
+        });
+    });
+</script>
+<div>
+    @Html.ActionLink("Nazad na spisak letova", "Index")
+</div>
+
 <script src="~/Scripts/okidac.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>

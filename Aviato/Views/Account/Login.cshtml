@@ -1,53 +1,55 @@
 ﻿@using Aviato.Models
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/style.css">
+
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Uloguj se";
 }
 
-@*<h2>@ViewBag.Title.</h2>*@
-<div class="row">
-    <div class="col-md-12">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                @*<h4>Use a local account to log in.</h4>*@
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group cst-form-group mt-5">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label cst-label" })
-                    <div class="col-md-12" style = "display: flex; justify-content: center;">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control cst-input", @style = "display: flex; align-items: center;" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        @*<label class="cst-label" for="imePrezime"><i class="material-icons cst-input-icon">person_outline</i><span>Ime i prezime</span></label>*@
-                    </div>
-                </div>
-                @*<div class="cst-login-dummy mt-4"></div>*@
-                <div class="form-group cst-form-group mt-5">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label cst-label" })
-                    <div class="col-md-12" style = "display: flex; justify-content: center;">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control cst-input", @style = "display: flex; align-items: center;" })
-                        @*<input class="form-control cst-input" type="password" id="password" required="true">*@
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        @*<label class="cst-label" for="password"><i class="material-icons cst-input-icon">lock</i><span>Password</span></label>*@
-                    </div>
-                </div>
-            <div class="form-group">
+<section id="loginForm">
+    <div class="form-holder mt-4">
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "cst-form mx-auto mt-5 pt-5", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group cst-form-group mt-5">
+                <label class="cst-label" for="email"><span class="material-icons cst-input-icon">person_outline</span><span>Email</span></label>
+                @Html.TextBoxFor(m => m.Email, new { @class = " form-control cst-input", id = "email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "cst-label" })
+            </div>
+
+            <div class="form-group cst-form-group mt-5">
+                <label class="cst-label" for="Password"><span class="material-icons cst-input-icon">lock</span><span>Password</span></label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control cst-input", id = "password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "cst-label" })
+            </div>
+
+            <div class="form-group cst-form-group mt-5">
                 <div class="col-md-offset-2 col-md-10">
                     <div class="checkbox">
-                        @Html.CheckBoxFor(m => m.RememberMe, new { @style = "display: flex; text-align: center;" })
+                        @Html.CheckBoxFor(m => m.RememberMe)
                         @Html.LabelFor(m => m.RememberMe, "Upamti me")
                     </div>
                 </div>
             </div>
+
             <div class="mx-auto w-100">
-                <input type="submit" value="Log in" class="btn btn-default cst-login-btn cst-light-blue-bcg cst-dark-blue-clr w-100 mt-4 mx-auto" style="display: flex;" />
+                <input type="submit" value="Log in" class="btn btn-default cst-login-btn cst-light-blue-bcg cst-dark-blue-clr w-100 mt-4 mx-auto" />
             </div>
-            }
-</section>
+        }
     </div>
-</div>
+</section>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="~/Scripts/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
 }
