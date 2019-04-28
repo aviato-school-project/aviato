@@ -6,3 +6,13 @@ Aviato/App_Data/aspnet-Aviato-20190415062629.mdf
 Aviato/App_Data/aspnet-Aviato-20190415062629_log.ldf
 Aviato/obj/
 vs/
+/.vs/
+Aviato/Controllers/LetController1.cs
+Aviato/Controllers/StjuardController1.cs
+Aviato/Helpers/
+Aviato/Models/Let1.cs
+Aviato/ViewModels/AngazmanViewModel.cs
+Aviato/Views/Let1/
+aviato.7z
+fullcalendar-4.1.0.zip
+fullcalendar-4.1.0/
